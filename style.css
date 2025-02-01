@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#player-name {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#action-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
