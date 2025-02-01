@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayPlayer(index) {
         playerNameElement.textContent = players[index].name;
-        actionButton.textContent = 'Who he play for in college?';
+        actionButton.textContent = "Where'd He Play In College?";
     }
 
     function getRandomPlayerIndex() {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     actionButton.addEventListener('click', () => {
-        if (actionButton.textContent === 'Who he play for in college?') {
+        if (actionButton.textContent === "Where'd He Play In College?") {
             playerNameElement.textContent += ` - ${players[currentPlayerIndex].college}`;
             actionButton.textContent = 'Next Player';
         } else {
