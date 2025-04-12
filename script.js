@@ -1,12 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playerNameElement = document.getElementById('player-name');
     const actionButton = document.getElementById('action-button');
-    const positionFilter = document.getElementById('position-filter');
+    const difficultyButtons = document.querySelectorAll('.difficulty-button');
     let currentPlayerIndex = 0;
     let players = [];
     let filteredPlayers = [];
     let isShowingCollege = false;
-    let selectedPositions = new Set();
+    let currentDifficulty = 'easy';
+
+    const difficultySettings = {
+        'easy': {
+            positions: ['QB', 'RB', 'WR', 'TE', 'FB'],
+            filter: (player) => difficultySettings.easy.positions.includes(player.position)
+        },
+        'medium': {
+            filter: (player) => {
+                const topPlayers = players
+                    .filter(p => p.proBowls > 0)
+                    .sort((a, b) => b.proBowls - a.proBowls)
+                    .slice(0, 100)
+                    .map(p => p.name);
+                return topPlayers.includes(player.name);
+            }
+        },
+        'sicko': {
+            filter: () => true // Show all players
+        }
+    };
 
     function parseCSVLine(line) {
         const result = [];
@@ -28,45 +48,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return result;
     }
 
-    function getUniquePositions() {
-        const positions = new Set();
-        players.forEach(player => {
-            if (player.position) {
-                positions.add(player.position);
+    function setDifficulty(difficulty) {
+        // Update UI
+        difficultyButtons.forEach(button => {
+            button.classList.remove('selected');
+            if (button.dataset.difficulty === difficulty) {
+                button.classList.add('selected');
             }
         });
-        return Array.from(positions).sort();
-    }
 
-    function populatePositionFilter() {
-        const positions = getUniquePositions();
-        positionFilter.innerHTML = positions.map(pos => 
-            `<button class="position-button" data-position="${pos}">${pos}</button>`
-        ).join('');
-
-        // Add click handlers to all position buttons
-        document.querySelectorAll('.position-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const position = button.dataset.position;
-                button.classList.toggle('selected');
-                if (button.classList.contains('selected')) {
-                    selectedPositions.add(position);
-                } else {
-                    selectedPositions.delete(position);
-                }
-                updateFilteredPlayers();
-            });
-        });
+        // Update filter
+        currentDifficulty = difficulty;
+        updateFilteredPlayers();
     }
 
     function updateFilteredPlayers() {
-        if (selectedPositions.size === 0) {
-            filteredPlayers = [...players];
-        } else {
-            filteredPlayers = players.filter(player => 
-                selectedPositions.has(player.position)
-            );
-        }
+        filteredPlayers = players.filter(difficultySettings[currentDifficulty].filter);
+        
         // Reset current player if it's no longer in filtered list
         if (!filteredPlayers.includes(players[currentPlayerIndex])) {
             currentPlayerIndex = 0;
@@ -85,11 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const college = columns[7];
                     const team = columns[19];
                     const position = columns[18];
-                    return { name, college, team, position };
+                    const proBowls = parseInt(columns[13]) || 0; // Column 14 is index 13
+                    return { name, college, team, position, proBowls };
                 });
-                filteredPlayers = [...players];
-                populatePositionFilter();
-                displayPlayer(currentPlayerIndex);
+                updateFilteredPlayers();
             });
     }
 
@@ -108,6 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } while (randomIndex === currentPlayerIndex);
         return randomIndex;
     }
+
+    // Add click handlers to difficulty buttons
+    difficultyButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            setDifficulty(button.dataset.difficulty);
+        });
+    });
 
     actionButton.addEventListener('click', () => {
         if (!isShowingCollege) {
