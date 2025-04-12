@@ -28,6 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    function createTeamLogoElement(teamCode) {
+        const logoContainer = document.createElement('div');
+        logoContainer.className = 'team-logo';
+        const logoImg = document.createElement('img');
+        logoImg.src = `logos/${teamCode}.png`;
+        logoImg.alt = teamCode;
+        logoImg.title = teamCode;
+        logoContainer.appendChild(logoImg);
+        return logoContainer;
+    }
+
     function parseCSVLine(line) {
         const result = [];
         let current = '';
@@ -108,20 +119,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const player = filteredPlayers[index];
         if (!player) return;
         
-        const draftInfo = player.draftYear !== 'NA' 
-            ? `Drafted: ${player.draftYear}, Round ${player.draftRound} Pick ${player.draftPick} (${player.draftTeam})`
-            : 'Undrafted';
+        // Create team logos container
+        const teamsContainer = document.createElement('div');
+        teamsContainer.className = 'teams-container';
+        
+        // Add team logos
+        const teamCodes = player.team.split(',').map(t => t.trim());
+        teamCodes.forEach(teamCode => {
+            const logoElement = createTeamLogoElement(teamCode);
+            teamsContainer.appendChild(logoElement);
+        });
             
-        const formattedTeams = player.team.split(',').map(t => t.trim()).join(', ');
+        // Create draft info container
+        const draftContainer = document.createElement('div');
+        draftContainer.className = 'draft-container';
+        
+        if (player.draftYear !== 'NA') {
+            const draftLogo = createTeamLogoElement(player.draftTeam);
+            draftContainer.innerHTML = `Drafted: ${player.draftYear}, Round ${player.draftRound} Pick ${player.draftPick} by `;
+            draftContainer.appendChild(draftLogo);
+        } else {
+            draftContainer.textContent = 'Undrafted';
+        }
             
         playerNameElement.innerHTML = `
             <div class="player-header">
                 <span class="player-name">${player.name}</span>
                 <span class="player-position">${player.position}</span>
             </div>
-            <div class="player-teams">Teams: ${formattedTeams}</div>
-            <div class="player-draft">${draftInfo}</div>
+            <div class="player-teams">Teams: </div>
+            <div class="player-draft"></div>
         `;
+        
+        // Insert teams container into the teams div
+        const teamsDiv = playerNameElement.querySelector('.player-teams');
+        teamsDiv.appendChild(teamsContainer);
+        
+        // Insert draft container
+        const draftDiv = playerNameElement.querySelector('.player-draft');
+        draftDiv.appendChild(draftContainer);
         
         isShowingCollege = false;
         actionButton.textContent = "Where'd He Play In College?";
@@ -145,21 +181,47 @@ document.addEventListener('DOMContentLoaded', () => {
     actionButton.addEventListener('click', () => {
         if (!isShowingCollege) {
             const player = filteredPlayers[currentPlayerIndex];
-            const draftInfo = player.draftYear !== 'NA' 
-                ? `Drafted: ${player.draftYear}, Round ${player.draftRound} Pick ${player.draftPick} (${player.draftTeam})`
-                : 'Undrafted';
+            
+            // Create team logos container
+            const teamsContainer = document.createElement('div');
+            teamsContainer.className = 'teams-container';
+            
+            // Add team logos
+            const teamCodes = player.team.split(',').map(t => t.trim());
+            teamCodes.forEach(teamCode => {
+                const logoElement = createTeamLogoElement(teamCode);
+                teamsContainer.appendChild(logoElement);
+            });
                 
-            const formattedTeams = player.team.split(',').map(t => t.trim()).join(', ');
+            // Create draft info container
+            const draftContainer = document.createElement('div');
+            draftContainer.className = 'draft-container';
+            
+            if (player.draftYear !== 'NA') {
+                const draftLogo = createTeamLogoElement(player.draftTeam);
+                draftContainer.innerHTML = `Drafted: ${player.draftYear}, Round ${player.draftRound} Pick ${player.draftPick} `;
+                draftContainer.appendChild(draftLogo);
+            } else {
+                draftContainer.textContent = 'Undrafted';
+            }
                 
             playerNameElement.innerHTML = `
                 <div class="player-header">
                     <span class="player-name">${player.name}</span>
                     <span class="player-position">${player.position}</span>
                 </div>
-                <div class="player-teams">Teams: ${formattedTeams}</div>
-                <div class="player-draft">${draftInfo}</div>
+                <div class="player-teams">Teams: </div>
+                <div class="player-draft"></div>
                 <div class="player-college">College: ${player.college}</div>
             `;
+            
+            // Insert teams container into the teams div
+            const teamsDiv = playerNameElement.querySelector('.player-teams');
+            teamsDiv.appendChild(teamsContainer);
+            
+            // Insert draft container
+            const draftDiv = playerNameElement.querySelector('.player-draft');
+            draftDiv.appendChild(draftContainer);
             
             actionButton.textContent = 'Next Player';
             isShowingCollege = true;
