@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playerNameElement = document.getElementById('player-name');
     const actionButton = document.getElementById('action-button');
+    const positionFilter = document.getElementById('position-filter');
     let currentPlayerIndex = 0;
     let players = [];
+    let filteredPlayers = [];
     let isShowingCollege = false;
+    let selectedPositions = new Set();
 
     function parseCSVLine(line) {
         const result = [];
@@ -25,6 +28,52 @@ document.addEventListener('DOMContentLoaded', () => {
         return result;
     }
 
+    function getUniquePositions() {
+        const positions = new Set();
+        players.forEach(player => {
+            if (player.position) {
+                positions.add(player.position);
+            }
+        });
+        return Array.from(positions).sort();
+    }
+
+    function populatePositionFilter() {
+        const positions = getUniquePositions();
+        positionFilter.innerHTML = positions.map(pos => 
+            `<button class="position-button" data-position="${pos}">${pos}</button>`
+        ).join('');
+
+        // Add click handlers to all position buttons
+        document.querySelectorAll('.position-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const position = button.dataset.position;
+                button.classList.toggle('selected');
+                if (button.classList.contains('selected')) {
+                    selectedPositions.add(position);
+                } else {
+                    selectedPositions.delete(position);
+                }
+                updateFilteredPlayers();
+            });
+        });
+    }
+
+    function updateFilteredPlayers() {
+        if (selectedPositions.size === 0) {
+            filteredPlayers = [...players];
+        } else {
+            filteredPlayers = players.filter(player => 
+                selectedPositions.has(player.position)
+            );
+        }
+        // Reset current player if it's no longer in filtered list
+        if (!filteredPlayers.includes(players[currentPlayerIndex])) {
+            currentPlayerIndex = 0;
+        }
+        displayPlayer(currentPlayerIndex);
+    }
+
     function loadPlayers() {
         fetch('sportsref_download.csv')
             .then(response => response.text())
@@ -34,16 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     const columns = parseCSVLine(line);
                     const name = columns[1];
                     const college = columns[7];
-                    const team = columns[19]
+                    const team = columns[19];
                     const position = columns[18];
                     return { name, college, team, position };
                 });
+                filteredPlayers = [...players];
+                populatePositionFilter();
                 displayPlayer(currentPlayerIndex);
             });
     }
 
     function displayPlayer(index) {
-        const player = players[index];
+        const player = filteredPlayers[index];
+        if (!player) return;
         playerNameElement.textContent = `${player.name} (${player.position}) - ${player.team}`;
         isShowingCollege = false;
         actionButton.textContent = "Where'd He Play In College?";
@@ -52,14 +104,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function getRandomPlayerIndex() {
         let randomIndex;
         do {
-            randomIndex = Math.floor(Math.random() * (players.length-1));
+            randomIndex = Math.floor(Math.random() * (filteredPlayers.length-1));
         } while (randomIndex === currentPlayerIndex);
         return randomIndex;
     }
 
     actionButton.addEventListener('click', () => {
         if (!isShowingCollege) {
-            const player = players[currentPlayerIndex];
+            const player = filteredPlayers[currentPlayerIndex];
             playerNameElement.textContent = `${player.name} (${player.position}) - ${player.team} - ${player.college}`;
             actionButton.textContent = 'Next Player';
             isShowingCollege = true;

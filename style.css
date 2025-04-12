@@ -1,16 +1,60 @@
+.filters {
+    margin-bottom: 20px;
+}
+
+.position-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    margin: 10px 0;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.position-button {
+    padding: 8px 12px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.position-button:hover {
+    background-color: #f0f0f0;
+}
+
+.position-button.selected {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+
 body {
     font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
     text-align: center;
-    margin-top: 50px;
 }
 
 #player-name {
-    font-size: 2em;
-    margin-bottom: 20px;
+    font-size: 24px;
+    margin: 20px 0;
 }
 
 #action-button {
     padding: 10px 20px;
-    font-size: 1em;
+    font-size: 16px;
     cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+#action-button:hover {
+    background-color: #0056b3;
 }
