@@ -3,9 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const actionButton = document.getElementById('action-button');
     let currentPlayerIndex = 0;
     let players = [];
+    let isShowingCollege = false;
 
     function loadPlayers() {
-        fetch('good_players.csv')
+        fetch('sportsref_download.csv')
             .then(response => response.text())
             .then(data => {
                 const lines = data.split('\n');
@@ -13,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const columns = line.split(',');
                     const name = columns[1];
                     const college = columns[7];
-                    return { name, college };
+                    const team = columns[18];
+                    return { name, college, team };
                 });
                 displayPlayer(currentPlayerIndex);
             });
@@ -21,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayPlayer(index) {
         playerNameElement.textContent = players[index].name;
+        isShowingCollege = false;
         actionButton.textContent = "Where'd He Play In College?";
     }
 
@@ -33,12 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     actionButton.addEventListener('click', () => {
-        if (actionButton.textContent === "Where'd He Play In College?") {
+        if (!isShowingCollege) {
             playerNameElement.textContent += ` - ${players[currentPlayerIndex].college}`;
             actionButton.textContent = 'Next Player';
+            isShowingCollege = true;
         } else {
             currentPlayerIndex = getRandomPlayerIndex();
-            // log the current player index
             console.log(currentPlayerIndex);
             displayPlayer(currentPlayerIndex);
         }
