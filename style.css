@@ -42,6 +42,45 @@ body {
 #player-name {
     font-size: 24px;
     margin: 20px 0;
+    text-align: left;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.player-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.player-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.player-position {
+    font-size: 20px;
+    color: #666;
+    font-weight: normal;
+}
+
+.player-teams, .player-draft, .player-college {
+    font-size: 16px;
+    color: #444;
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.player-college {
+    font-style: italic;
+    color: #007bff;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
 }
 
 #action-button {
@@ -53,8 +92,31 @@ body {
     border: none;
     border-radius: 5px;
     transition: background-color 0.2s ease;
+    margin-top: 20px;
 }
 
 #action-button:hover {
     background-color: #0056b3;
+}
+
+.rules {
+    margin-top: 40px;
+    font-size: 12px;
+    font-style: italic;
+    color: #666;
+}
+
+.rules h4 {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.rules ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rules li {
+    margin: 5px 0;
 }

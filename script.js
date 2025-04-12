@@ -83,8 +83,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     const college = columns[7];
                     const team = columns[19];
                     const position = columns[18];
-                    const proBowls = parseInt(columns[13]) || 0; // Column 14 is index 13
-                    return { name, college, team, position, proBowls };
+                    const proBowls = parseInt(columns[13]) || 0;
+                    const draftYear = columns[6];
+                    const draftRound = columns[4];
+                    const draftPick = columns[5];
+                    const draftTeam = columns[3];
+                    return { 
+                        name, 
+                        college, 
+                        team, 
+                        position, 
+                        proBowls,
+                        draftYear,
+                        draftRound,
+                        draftPick,
+                        draftTeam
+                    };
                 });
                 updateFilteredPlayers();
             });
@@ -93,7 +107,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayPlayer(index) {
         const player = filteredPlayers[index];
         if (!player) return;
-        playerNameElement.textContent = `${player.name} (${player.position}) - ${player.team}`;
+        
+        const draftInfo = player.draftYear !== 'NA' 
+            ? `Drafted: ${player.draftYear}, Round ${player.draftRound} Pick ${player.draftPick} (${player.draftTeam})`
+            : 'Undrafted';
+            
+        const formattedTeams = player.team.split(',').map(t => t.trim()).join(', ');
+            
+        playerNameElement.innerHTML = `
+            <div class="player-header">
+                <span class="player-name">${player.name}</span>
+                <span class="player-position">${player.position}</span>
+            </div>
+            <div class="player-teams">Teams: ${formattedTeams}</div>
+            <div class="player-draft">${draftInfo}</div>
+        `;
+        
         isShowingCollege = false;
         actionButton.textContent = "Where'd He Play In College?";
     }
@@ -116,7 +145,22 @@ document.addEventListener('DOMContentLoaded', () => {
     actionButton.addEventListener('click', () => {
         if (!isShowingCollege) {
             const player = filteredPlayers[currentPlayerIndex];
-            playerNameElement.textContent = `${player.name} (${player.position}) - ${player.team} - ${player.college}`;
+            const draftInfo = player.draftYear !== 'NA' 
+                ? `Drafted: ${player.draftYear}, Round ${player.draftRound} Pick ${player.draftPick} (${player.draftTeam})`
+                : 'Undrafted';
+                
+            const formattedTeams = player.team.split(',').map(t => t.trim()).join(', ');
+                
+            playerNameElement.innerHTML = `
+                <div class="player-header">
+                    <span class="player-name">${player.name}</span>
+                    <span class="player-position">${player.position}</span>
+                </div>
+                <div class="player-teams">Teams: ${formattedTeams}</div>
+                <div class="player-draft">${draftInfo}</div>
+                <div class="player-college">College: ${player.college}</div>
+            `;
+            
             actionButton.textContent = 'Next Player';
             isShowingCollege = true;
         } else {
