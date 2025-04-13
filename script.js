@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentDifficulty = 'easy';
     let correctCount = 0;
     let incorrectCount = 0;
+    let collegeMatches = new Map();
 
     // Create tally display
     const tallyDisplay = document.createElement('div');
@@ -128,37 +129,61 @@ document.addEventListener('DOMContentLoaded', () => {
         displayPlayer(currentPlayerIndex);
     }
 
-    function loadPlayers() {
-        console.log('Loading players from CSV');
-        fetch('sportsref_download.csv')
-            .then(response => {
-                console.log('CSV fetch response:', response.status);
-                return response.text();
-            })
+    function loadCollegeMatches() {
+        return fetch('college_matches.csv')
+            .then(response => response.text())
             .then(data => {
-                console.log('CSV data received, length:', data.length);
                 const lines = data.split('\n');
-                players = lines.slice(1).map(line => {
-                    const columns = parseCSVLine(line);
-                    return { 
-                        name: columns[1],
-                        college: columns[7],
-                        team: columns[19],
-                        position: columns[18],
-                        proBowls: parseInt(columns[13]) || 0,
-                        draftYear: columns[6],
-                        draftRound: columns[4],
-                        draftPick: columns[5],
-                        draftTeam: columns[3]
-                    };
-                });
-                console.log('Players loaded:', players.length);
-                updateFilteredPlayers();
+                // Skip header row
+                for (let i = 1; i < lines.length; i++) {
+                    const [sportsrefName, logosName] = lines[i].split(',');
+                    if (sportsrefName && logosName) {
+                        collegeMatches.set(sportsrefName.trim(), logosName.trim());
+                    }
+                }
+                console.log('Loaded college matches:', collegeMatches.size);
             })
             .catch(error => {
-                console.error('Error loading players:', error);
-                playerNameElement.innerHTML = 'Error loading player data. Please try refreshing the page.';
+                console.error('Error loading college matches:', error);
             });
+    }
+
+    function getStandardizedCollegeName(college) {
+        return collegeMatches.get(college) || college;
+    }
+
+    function loadPlayers() {
+        console.log('Loading players from CSV');
+        Promise.all([
+            fetch('sportsref_download.csv').then(response => response.text()),
+            loadCollegeMatches()
+        ])
+        .then(([playerData]) => {
+            console.log('CSV data received, length:', playerData.length);
+            const lines = playerData.split('\n');
+            players = lines.slice(1).map(line => {
+                const columns = parseCSVLine(line);
+                const college = columns[7];
+                return { 
+                    name: columns[1],
+                    college: college,
+                    standardizedCollege: getStandardizedCollegeName(college),
+                    team: columns[19],
+                    position: columns[18],
+                    proBowls: parseInt(columns[13]) || 0,
+                    draftYear: columns[6],
+                    draftRound: columns[4],
+                    draftPick: columns[5],
+                    draftTeam: columns[3]
+                };
+            });
+            console.log('Players loaded:', players.length);
+            updateFilteredPlayers();
+        })
+        .catch(error => {
+            console.error('Error loading data:', error);
+            playerNameElement.innerHTML = 'Error loading player data. Please try refreshing the page.';
+        });
     }
 
     function displayPlayer(index) {
@@ -298,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="player-teams">Teams: </div>
                 <div class="player-draft"></div>
-                <div class="player-college">College: ${player.college}</div>
+                <div class="player-college">${player.standardizedCollege}</div>
             `;
             
             // Insert teams container into the teams div

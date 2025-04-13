@@ -86,11 +86,16 @@ body {
 }
 
 .player-college {
-    font-style: italic;
-    color: #007bff;
-    margin-top: 15px;
-    padding-top: 15px;
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #333;
     border-top: 1px solid #eee;
+}
+
+.player-college::before {
+    content: "College: ";
+    color: #000;
+    font-weight: bold;
 }
 
 .container {
