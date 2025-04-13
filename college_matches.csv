@@ -1,0 +1,140 @@
+sportsref_name,logos_name,id,color,alt_color
+Alabama,Alabama,333,#690014,#f1f2f3
+Alabama A&M,Alabama A&M,2010,#790000,#ffffff
+Alcorn State,Alcorn State,2016,#4b0058,#46166a
+Arizona,Arizona,12,#002449,#00205b
+Arizona State,Arizona State,9,#942139,#f1f2f3
+Arkansas,Arkansas,8,#9c1831,#000000
+Arkansas State,Arkansas State,2032,#e81018,#000000
+Arkansas–Pine Bluff,Arkansas-Pine Bluff,2029,#e0aa0f,#eaaa00
+Auburn,Auburn,2,#03244d,#f1f2f3
+Baylor,Baylor,239,#004834,#ffb81c
+Bethune-Cookman,Bethune-Cookman,2065,#7b1831,#e9aa12
+Bloomsburg,Bloomsburg,2071,#000000,
+Boise State,Boise State,68,#09347A,#d8d9da
+Boston College,Boston College,103,#88001a,#a39161
+Brigham Young,BYU,252,#001E4C,#ffffff
+Brown,Brown,225,#411e09,#949300
+Buffalo,Buffalo,2084,#041A9B,#ebebeb
+CSU Pueblo,Colorado State-Pueblo,2570,#000000,
+California,California,25,#031522,#ffc423
+Central Michigan,Central Michigan,2117,#6a0032,#ffffff
+Central Missouri,Central Missouri State,2118,#000000,
+Cincinnati,Cincinnati,2132,#000000,#717073
+Clemson,Clemson,228,#F66733,#522d80
+Coastal Carolina,Coastal Carolina,324,#007073,#876447
+Colorado,Colorado,38,#d1c57e,#ffd200
+Colorado State,Colorado State,36,#004537,#ffc425
+Connecticut,Connecticut,41,#001d40,#f1f2f3
+Duke,Duke,150,#001A57,#f1f2f3
+East Carolina,East Carolina,151,#4b1869,#f0907b
+Eastern Michigan,Eastern Michigan,2199,#00331b,#f0f0f0
+Eastern Washington,Eastern Washington,331,#a10022,#abb4bc
+Florida,Florida,57,#0021A5,#0021a5
+Florida Atlantic,Florida Atlantic,2226,#004B85,#bb2f4c
+Florida International,Florida International,2229,#001538,#c5960c
+Florida State,Florida State,52,#782F40,#ceb888
+Fresno State,Fresno State,278,#c41230,#231f20
+Furman,Furman,231,#4A2184,#909090
+Georgia,Georgia,61,#CC0000,#000000
+Georgia Tech,Georgia Tech,59,#00223e,#002c56
+Grambling State,Grambling,2755,#ee8601,#ffd10a
+Grand Valley State,Grand Valley State,125,#000000,
+Harvard,Harvard,108,#990000,#dbdbdb
+Hobart,Hobart,174,#000000,
+Howard,Howard,47,#9e0b0e,#6b818d
+Idaho,Idaho,70,#000000,#8c6e4a
+Idaho State,Idaho State,304,#ef8c00,#e9a126
+Illinois,Illinois,356,#f77329,#fa6300
+Indiana,Indiana,84,#7D110C,#eeedeb
+Iowa,Iowa,2294,#000000,#ffe100
+Iowa State,Iowa State,66,#660015,#830b2c
+Kansas,Kansas,2305,#0022B4,#e8000d
+Kansas State,Kansas State,2306,#633194,#e7d2ad
+Kentucky,Kentucky,96,#005DAA,#ffffff
+Lane,Lane,2323,#000000,
+Louisiana,Louisiana College,2347,#000000,
+Louisiana State,LSU,99,#22005c,#fdd023
+Louisville,Louisville,97,#ad000a,#cccccc
+Maryland,Maryland,120,#D5002B,#ffcd00
+Memphis,Memphis,235,#002447,#231f20
+Miami (FL),Miami,2390,#004325,#f0f0f0
+Miami (OH),Miami (OH),193,#a4000c,#f0f0f0
+Michigan,Michigan,130,#00274c,#ffcb05
+Michigan State,Michigan State,127,#18453B,#ffffff
+Middle Tennessee,Middle Tennessee,2393,#0079C2,#c3c5c8
+Minnesota,Minnesota,135,#7F011B,#7a0019
+Mississippi State,Mississippi State,344,#762123,#c8c8c8
+Missouri,Missouri,142,#000000,#000000
+Missouri Southern State,Missouri Southern State,2403,#000000,
+Missouri Western State,Missouri Western,137,#000000,
+Montana,Montana,149,#751D4A,#666666
+NC State,NC State,152,#EF1216,#231f20
+Nebraska,Nebraska,158,#F20017,#f5f1e7
+Nevada,Nevada,2440,#153E5F,#8e9295
+New Hampshire,New Hampshire,160,#004990,#c3c4c6
+New Mexico,New Mexico,167,#000000,#231f20
+North Alabama,North Alabama,2453,#000000,
+North Carolina,North Carolina,153,#99bfe5,#13294b
+North Carolina A&T,North Carolina A&T,2448,#0505aa,#004684
+North Dakota State,North Dakota State,2449,#01402A,#ffffff
+Northern Colorado,Northern Colorado,2458,#13558D,#ffc533
+Northern Illinois,Northern Illinois,2459,#F1122C,#cc0000
+Northern Iowa,Northern Iowa,2460,#473282,#ffffff
+Northwestern,Northwestern,77,#372286,#d6cac1
+Notre Dame,Notre Dame,87,#00122b,#ae9142
+Ohio State,Ohio State,194,#DE3121,#666666
+Oklahoma,Oklahoma,201,#7b0000,#cccccc
+Oklahoma State,Oklahoma State,197,#FF6500,#ff9900
+Ole Miss,Ole Miss,145,#001148,#00205b
+Oregon,Oregon,2483,#044520,#fee123
+Oregon State,Oregon State,204,#c34500,#dea076
+Penn State,Penn State,213,#00265D,#002e5c
+Pittsburgh,Pittsburgh,221,#003263,#231f20
+Portland State,Portland State,2502,#00311e,#ebebeb
+Presbyterian,Presbyterian College,2506,#194896,#990134
+Purdue,Purdue,2509,#B89D29,#a4a9ad
+Regina,Salve Regina,2776,#000000,
+Rutgers,Rutgers,164,#d21034,#ffffff
+SMU,SMU,2567,#E32F38,#ecdcb9
+Samford,Samford,2535,#005485,#bc0023
+San Diego,San Diego,301,#2f99d4,#2f99d4
+South Carolina,South Carolina,2579,#670010,#000000
+South Carolina State,South Carolina State,2569,#7d1315,#104897
+South Florida,South Florida,58,#004A36,#231f20
+Southern California,USC,30,#AE2531,#ffc72c
+Southern Mississippi,Southern Mississippi,2572,#FFAA3C,#ffc423
+Southern Utah,Southern Utah,253,#d10000,#c2c3c0
+Stanford,Stanford,24,#A80532,#ffffff
+Syracuse,Syracuse,183,#F37321,#0d1d37
+TCU,TCU,2628,#3C377D,#f1f2f3
+Temple,Temple,218,#A80532,#a7a9ac
+Tennessee,Tennessee,2633,#EE9627,#ffffff
+Tennessee State,Tennessee State,2634,#383C84,#f0f0f0
+Texas,Texas,251,#EE7524,#f0f0f0
+Texas A&M,Texas A&M,245,#5C0025,#ffffff
+Texas Tech,Texas Tech,2641,#C80025,#231f20
+The Citadel,The Citadel,2643,#002b5c,#f0f0f0
+Toledo,Toledo,2649,#00488F,#ffd51d
+Towson,Towson,119,#FFC229,
+Troy,Troy,2653,#AE0210,#88898c
+Tulane,Tulane,2655,#005837,#3baf29
+Tulsa,Tulsa,202,#004371,#ee3b33
+UAB,UAB,5,#003b28,#ffc845
+UCF,UCF,2116,#000000,#231f20
+UCLA,UCLA,26,#005C8E,#ffc72c
+UTEP,UTEP,2638,#002843,#ff6f12
+UTSA,UT San Antonio,2636,#002A5C,#f47321
+Utah,Utah,254,#890012,#7e8083
+Utah State,Utah State,328,#003263,#949ca1
+Vanderbilt,Vanderbilt,238,#000000,#231f20
+Virginia,Virginia,258,#00204e,#002d62
+Virginia Tech,Virginia Tech,259,#74232D,#c2c1ba
+Wake Forest,Wake Forest,154,#9E7E38,#000000
+Washington,Washington,264,#2B2F64,#e8e3d3
+Washington State,Washington State,265,#94022a,#6a747c
+West Alabama,West Alabama,2695,#000000,
+West Virginia,West Virginia,277,#FFC600,#eaaa00
+Western Michigan,Western Michigan,2711,#B59966,#bfa979
+Wisconsin,Wisconsin,275,#A00001,#f7f7f7
+Wyoming,Wyoming,2751,#533B22,#ffffff
