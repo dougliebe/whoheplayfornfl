@@ -11,10 +11,13 @@
         <h1>Where'd He Play In College?</h1>
         
         <div class="difficulty-controls">
-            <button class="difficulty-button selected" data-difficulty="easy">Easy (Skill Positions)</button>
-            <button class="difficulty-button" data-difficulty="medium">Medium (Top 100 Pro Bowlers)</button>
-            <button class="difficulty-button" data-difficulty="recent">Recent Only (Skill Positions, Drafted > 2020)</button>
-            <button class="difficulty-button" data-difficulty="sicko">Sicko Mode (All Positions)</button>
+            <label for="difficulty-select" class="difficulty-label">Difficulty:</label>
+            <select id="difficulty-select" class="difficulty-select">
+                <option value="easy">Easy (Skill Positions)</option>
+                <option value="medium">Medium (Pro Bowlers)</option>
+                <option value="recent">Recent Only (2020+)</option>
+                <option value="sicko">Sicko Mode (All Players)</option>
+            </select>
         </div>
 
         <div class="player-info">

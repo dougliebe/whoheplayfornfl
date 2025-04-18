@@ -121,13 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function setDifficulty(difficulty) {
         console.log('Setting difficulty:', difficulty);
         // Update UI
-        difficultyButtons.forEach(button => {
-            button.classList.remove('selected');
-            if (button.dataset.difficulty === difficulty) {
-                button.classList.add('selected');
-            }
-        });
-
+        difficultySelect.value = difficulty;
+        
         // Update filter
         currentDifficulty = difficulty;
         updateFilteredPlayers();
@@ -255,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="player-teams">Teams: </div>
             <div class="player-draft"></div>
+            <div class="player-college">${player.standardizedCollege}</div>
         `;
         
         // Insert teams container into the teams div
@@ -293,12 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
         isShowingCollege = false;
     }
 
-    // Add click handlers to difficulty buttons
-    difficultyButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            console.log('Difficulty button clicked:', button.dataset.difficulty);
-            setDifficulty(button.dataset.difficulty);
-        });
+    // Add event listener for difficulty select
+    const difficultySelect = document.getElementById('difficulty-select');
+    difficultySelect.addEventListener('change', () => {
+        console.log('Difficulty changed:', difficultySelect.value);
+        setDifficulty(difficultySelect.value);
     });
 
     // Add event listeners for feedback buttons
@@ -319,49 +314,8 @@ document.addEventListener('DOMContentLoaded', () => {
     actionButton.addEventListener('click', () => {
         console.log('Action button clicked, isShowingCollege:', isShowingCollege);
         if (!isShowingCollege) {
-            const player = filteredPlayers[currentPlayerIndex];
-            console.log('Showing college for player:', player.name);
-            
-            // Create team logos container
-            const teamsContainer = document.createElement('div');
-            teamsContainer.className = 'teams-container';
-            
-            // Add team logos
-            const teamCodes = player.team.split(',').map(t => t.trim());
-            teamCodes.forEach(teamCode => {
-                const logoElement = createTeamLogoElement(teamCode);
-                teamsContainer.appendChild(logoElement);
-            });
-                
-            // Create draft info container
-            const draftContainer = document.createElement('div');
-            draftContainer.className = 'draft-container';
-            
-            if (player.draftYear !== 'NA') {
-                const draftLogo = createTeamLogoElement(player.draftTeam);
-                draftContainer.innerHTML = `Drafted: ${player.draftYear}, Round ${player.draftRound} Pick ${player.draftPick} `;
-                draftContainer.appendChild(draftLogo);
-            } else {
-                draftContainer.textContent = 'Undrafted';
-            }
-                
-            playerNameElement.innerHTML = `
-                <div class="player-header">
-                    <span class="player-name">${player.name}</span>
-                    <span class="player-position">${player.position}</span>
-                </div>
-                <div class="player-teams">Teams: </div>
-                <div class="player-draft"></div>
-                <div class="player-college">${player.standardizedCollege}</div>
-            `;
-            
-            // Insert teams container into the teams div
-            const teamsDiv = playerNameElement.querySelector('.player-teams');
-            teamsDiv.appendChild(teamsContainer);
-            
-            // Insert draft container
-            const draftDiv = playerNameElement.querySelector('.player-draft');
-            draftDiv.appendChild(draftContainer);
+            const collegeDiv = playerNameElement.querySelector('.player-college');
+            collegeDiv.classList.add('visible');
             
             // Hide action button and show feedback buttons
             actionButton.style.display = 'none';
