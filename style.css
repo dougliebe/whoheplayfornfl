@@ -191,7 +191,7 @@ body {
     margin: 20px 0;
     text-align: center;
     color: #333;
-    order: 2;
+    order: 3;
 }
 
 .feedback-buttons {
@@ -227,4 +227,12 @@ body {
 
 .incorrect-button:hover {
     background-color: #da190b;
+}
+
+.progress-display {
+    font-size: 0.9em;
+    color: #666;
+    margin: 10px 0;
+    text-align: center;
+    order: 2;
 }

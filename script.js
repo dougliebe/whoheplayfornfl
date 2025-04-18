@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let correctCount = 0;
     let incorrectCount = 0;
     let collegeMatches = new Map();
+    let shuffledIndices = [];
+    let currentProgress = 0;
 
     // Create tally display
     const tallyDisplay = document.createElement('div');
@@ -51,6 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hide feedback buttons initially
     buttonContainer.style.display = 'none';
 
+    // Create progress display
+    const progressDisplay = document.createElement('div');
+    progressDisplay.className = 'progress-display';
+    progressDisplay.innerHTML = '0 of 0 players done';
+    playerInfoContainer.appendChild(progressDisplay);
+
     const difficultySettings = {
         'easy': {
             positions: ['QB', 'RB', 'WR', 'TE', 'FB'],
@@ -64,6 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     .slice(0, 100)
                     .map(p => p.name);
                 return topPlayers.includes(player.name);
+            }
+        },
+        'recent': {
+            positions: ['QB', 'RB', 'WR', 'TE', 'FB'],
+            filter: (player) => {
+                const isSkillPosition = difficultySettings.recent.positions.includes(player.position);
+                const isRecent = parseInt(player.draftYear) > 2020;
+                return isSkillPosition && isRecent;
             }
         },
         'sicko': {
@@ -117,15 +133,29 @@ document.addEventListener('DOMContentLoaded', () => {
         updateFilteredPlayers();
     }
 
+    function shuffleArray(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
+    function updateProgress() {
+        progressDisplay.innerHTML = `${currentProgress} of ${shuffledIndices.length} players done`;
+    }
+
     function updateFilteredPlayers() {
         console.log('Updating filtered players for difficulty:', currentDifficulty);
         filteredPlayers = players.filter(difficultySettings[currentDifficulty].filter);
         console.log('Filtered players count:', filteredPlayers.length);
         
-        // Reset current player if it's no longer in filtered list
-        if (!filteredPlayers.includes(players[currentPlayerIndex])) {
-            currentPlayerIndex = 0;
-        }
+        // Create new shuffled order
+        shuffledIndices = shuffleArray(Array.from({length: filteredPlayers.length}, (_, i) => i));
+        currentProgress = 0;
+        currentPlayerIndex = shuffledIndices[0];
+        updateProgress();
         displayPlayer(currentPlayerIndex);
     }
 
@@ -242,21 +272,20 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Player display updated');
     }
 
-    function getRandomPlayerIndex() {
-        let randomIndex;
-        do {
-            randomIndex = Math.floor(Math.random() * (filteredPlayers.length-1));
-        } while (randomIndex === currentPlayerIndex);
-        return randomIndex;
-    }
-
     function updateTallyDisplay() {
         tallyDisplay.innerHTML = `Correct: ${correctCount} | Incorrect: ${incorrectCount}`;
     }
 
     function getNextPlayer() {
         console.log('Getting next player');
-        currentPlayerIndex = getRandomPlayerIndex();
+        currentProgress++;
+        if (currentProgress >= shuffledIndices.length) {
+            // If we've gone through all players, reshuffle
+            shuffledIndices = shuffleArray(Array.from({length: filteredPlayers.length}, (_, i) => i));
+            currentProgress = 0;
+        }
+        currentPlayerIndex = shuffledIndices[currentProgress];
+        updateProgress();
         displayPlayer(currentPlayerIndex);
         // Show action button and hide feedback buttons
         actionButton.style.display = 'block';
