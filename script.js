@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const actionButton = document.getElementById('action-button');
     const difficultyButtons = document.querySelectorAll('.difficulty-button');
     const playerInfoContainer = document.querySelector('.player-info');
+    const difficultySelect = document.getElementById('difficulty-select');
+    let currentDifficulty = difficultySelect.value;
 
     console.log('Found elements:', {
         playerNameElement: !!playerNameElement,
@@ -21,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let players = [];
     let filteredPlayers = [];
     let isShowingCollege = false;
-    let currentDifficulty = 'easy';
     let correctCount = 0;
     let incorrectCount = 0;
     let collegeMatches = new Map();
@@ -61,18 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const difficultySettings = {
         'easy': {
-            positions: ['QB', 'RB', 'WR', 'TE', 'FB'],
-            filter: (player) => difficultySettings.easy.positions.includes(player.position)
+            filter: (player, index) => index < 100
         },
         'medium': {
-            filter: (player) => {
-                const topPlayers = players
-                    .filter(p => p.proBowls > 0)
-                    .sort((a, b) => b.proBowls - a.proBowls)
-                    .slice(0, 100)
-                    .map(p => p.name);
-                return topPlayers.includes(player.name);
-            }
+            positions: ['QB', 'RB', 'WR', 'TE', 'FB'],
+            filter: (player) => difficultySettings.medium.positions.includes(player.position)
         },
         'recent': {
             positions: ['QB', 'RB', 'WR', 'TE', 'FB'],
@@ -84,6 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         'sicko': {
             filter: () => true // Show all players
+        },
+        'pirate': {
+            filter: (player) => {
+                console.log('Checking player for pirate mode:', player.name, 'Teams:', player.team);
+                return player.team && player.team.toUpperCase().includes('TAM');
+            }
         }
     };
 
@@ -143,6 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateFilteredPlayers() {
         console.log('Updating filtered players for difficulty:', currentDifficulty);
+        console.log('Available difficulty settings:', Object.keys(difficultySettings));
+        console.log('Current filter:', difficultySettings[currentDifficulty]?.filter);
         filteredPlayers = players.filter(difficultySettings[currentDifficulty].filter);
         console.log('Filtered players count:', filteredPlayers.length);
         
@@ -290,10 +292,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add event listener for difficulty select
-    const difficultySelect = document.getElementById('difficulty-select');
-    difficultySelect.addEventListener('change', () => {
-        console.log('Difficulty changed:', difficultySelect.value);
-        setDifficulty(difficultySelect.value);
+    difficultySelect.addEventListener('change', (event) => {
+        console.log('Difficulty changed to:', event.target.value);
+        console.log('Current difficulty settings:', difficultySettings);
+        setDifficulty(event.target.value);
     });
 
     // Add event listeners for feedback buttons
